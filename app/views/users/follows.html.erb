@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="row">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>image</th>
+					<th>name</th>
+				</tr>
+			</thead>
+			<% @user.followings.each do |following|%>
+				<tbody>
+					<tr>
+						<td><%= attachment_image_tag following, :profile_image, :fill, 200, 200, format: 'jpeg', class: "img pull-left profile-img", fallback: "no_image.jpg"  %></td>
+						<td><%= following.name %></td>
+						<td><%= "フォロー数：#{following.followings.count}"%></td>
+						<td><%= "フォロワー数：#{following.followers.count}"%></td>
+						<% if @user == current_user %>
+							<td>
+								<%= form_for(current_user.relationships.find_by(follow_id: following.id), html: { method: :delete }) do |f| %>
+									<%= hidden_field_tag :follow_id, following.id %>
+    					    		<%= f.submit 'Unfollow', class: 'btn btn-danger btn-block' %>
+    					    	<% end %>
+    				    	</td>
+						<% end %>
+					</tr>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
+</div>

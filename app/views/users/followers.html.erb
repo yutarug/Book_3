@@ -1,0 +1,22 @@
+<div class="container">
+	<div class="row">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>image</th>
+					<th>name</th>
+				</tr>
+			</thead>
+			<% @user.followers.each do |follower|%>
+				<tbody>
+					<tr>
+						<td><%= attachment_image_tag follower, :profile_image, :fill, 200, 200, format: 'jpeg', class: "img pull-left profile-img", fallback: "no_image.jpg"  %></td>
+						<td><%= follower.name %></td>
+						<td><%= "フォロー数：#{follower.followings.count}"%></td>
+						<td><%= "フォロワー数：#{follower.followers.count}"%></td>
+					</tr>
+				</tbody>
+			<% end %>
+		</table>
+	</div>
+</div>

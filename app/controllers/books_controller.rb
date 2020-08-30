@@ -25,6 +25,7 @@ before_action :authenticate_user!,:only => [:show, :index, :edit]
   def show
     @book = Book.new
   	@sa = Book.find(params[:id])
+    @post_comment = PostComment.new
     # @user = User.find(@sa.user_id)
     @user = @sa.user
   end

@@ -31,9 +31,45 @@
 					       <button type="button" class="btn-danger"><%= link_to "Destroy", book_path(@sa), method: :delete%></button>
 						<% end %>
 					</td>
+						<%if @sa.favorited_by?(current_user)%>
+							<td>
+								<%= link_to book_favorites_path(@sa), method: :delete do %>
+
+								 <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red;"></span>
+								 <% end %>
+								 <%= @sa.favorites.count %> いいね
+							</td>
+						<% else %>
+							<td>
+								<%= link_to book_favorites_path(@sa), method: :post do %>
+								<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+								<% end %>
+								 <%= @sa.favorites.count %> いいね
+							</td>
+						<% end %>
+					<td>
+						 <p class="comment-count"><%= @sa.post_comments.count %>件コメント</p>
+					</td>
 				</tr>
 			</tbody>
 		</table>
+
+				<div class="comment-form">
+					<%= form_for [@sa, @post_comment] do |f| %>
+            			<%= f.text_area :comment, class: "form-control",placeholder: "コメントをここに" %>
+    					<%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+					<% end %>
+				</div>
+
+				<div class="comment-view">
+					<% @sa.post_comments.each do |f| %>
+						<%= f.user.name %>
+						<%= f.created_at.strftime('%Y/%m/%d') %>
+						<%= f.comment %>
+						<%= link_to "コメントを削除する",book_post_comments_path(f),method: :delete %>
+					<% end %>
+				</div>
+		</div>
 	  </div>
 	</div>
 </div>

@@ -11,7 +11,7 @@
           <%= render 'books/list', book: @book, user: @user %>
         </div>
         <div class="col-xs-9">
-	
+
 			<h1 class=>Books</h1>
 				<table class="table table-striped">
 					<thead>
@@ -31,6 +31,12 @@
 									</td>
 									<td><%= link_to book.title,book_path(book.id) %></td>
 									<td><%= book.body%></td>
+									<td id="likes_buttons_<%= book.id %>">
+										<%= render partial: "books/like" , locals: {book: book}%>
+									</td>
+										<td>
+											<p class="comment-count"><%= book.post_comments.count %>件コメント</p>
+										</td>
 								</tr>
 							</tbody>
 						<% end %>
