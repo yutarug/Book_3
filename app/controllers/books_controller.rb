@@ -8,6 +8,7 @@ before_action :authenticate_user!,:only => [:show, :index, :edit]
     @books = Book.all
   end
   def create
+    binding.pry
   	@book = Book.new(book_params)
     @book.user_id =  current_user.id
   	if @book.save
